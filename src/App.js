@@ -17,12 +17,8 @@ function App() {
   };
 
   let defaultTodo = [
-    { id: generateHash(), value: "eat" },
     { id: generateHash(), value: "sleep" },
     { id: generateHash(), value: "work" },
-    { id: generateHash(), value: "workOut" },
-    { id: generateHash(), value: "workIn" },
-    { id: generateHash(), value: "workWithin" },
   ];
 
   const [items, setItems] = useState(defaultTodo);
@@ -42,21 +38,38 @@ function App() {
     setItems(updatedItems);
   };
 
+  const updateItemHandler = (key) => {
+    console.log("Update item clicked! " + key);
+    return <div>Hello</div>;
+  };
+
   const showItems = () => {
     console.log(items);
   };
 
-  return (
-    <div className="App">
-      <Form onAddItemHandler={addItemHandler} />
-      {/*<button onClick={addItem}>Add item to todo</button>*/}
-      <Todo arrayItems={items} onDeleteItemHandler={deleteItemHandler} />
-    </div>
-  );
+  if (items.length === 0) {
+    return (
+      <div className="App">
+        <Form onAddItemHandler={addItemHandler} />
+        {/*<button onClick={addItem}>Add item to todo</button>*/}
+        <div className="nothing-to-show">Nothing to show</div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="App">
+        <Form onAddItemHandler={addItemHandler} />
+        <Todo
+          arrayItems={items}
+          onDeleteItemHandler={deleteItemHandler}
+          onUpdateItemHandler={updateItemHandler}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;
-
 
 // How to call API in React
 // Axios library
