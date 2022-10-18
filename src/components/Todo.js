@@ -1,21 +1,31 @@
-import React, { Component } from "react";
+import React from "react";
+import "./Todo.css"
 
-class Todo extends Component {
-  constructor(props) {
-    super(props);
+function Todo(props) {
+  const handleDeleteBtn = (key) => {
+    props.onDeleteItemHandler(key);
+  };
 
-    this.state = {
-      first: "",
-    };
-  }
-
-  addItem() {
-    console.log("Function within todo class called!");
-  }
-
-  render() {
-    return <div onClick={this.addItem}>Todo</div>;
-  }
+  return (
+    <div>
+      <h1>Your to-do list</h1>
+      <ul>
+        {props.arrayItems.map((item) => (
+          <div className="to-do__container">
+            <li key={item.id} className="to-do__title">{item.value}</li>
+            <button 
+              className="buttons"
+              onClick={() => {
+                handleDeleteBtn(item.id);
+              }}
+            >
+              Delete above todo
+            </button>
+          </div>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default Todo;

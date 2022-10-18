@@ -1,30 +1,34 @@
 import React, { useState } from "react";
 import Todo from "./Todo";
+import "./Form.css"
 
-function Form() {
-  const [items, setItems] = useState([]);
+function Form(props) {
+  const [todo, setTodo] = useState("");
 
-  const appendItem = () => {
-    setItems([
-      ...items,
-      {
-        id: items.length,
-        value: Math.floor(Math.random() * 10) + 1,
-      },
-    ]);
+  const todoChangeHandler = (event) => {
+    setTodo(event.target.value);
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+
+    const todoData = {
+      value: todo,
+    };
+
+    props.onAddItemHandler(todoData);
+    setTodo("");
   };
 
   return (
     <div>
-      <h1>Enter details here</h1>
-      <button value={items} onClick={appendItem}>
-        Add new
-      </button>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>{item.value}</li>
-        ))}
-      </ul>
+      <form onSubmit={submitHandler} className="Form">
+        <label>To Do</label>
+        <input type="text" value={todo} onChange={todoChangeHandler}></input>
+        <div>
+          <button type="submit" className="buttons">Add New</button>
+        </div>
+      </form>
     </div>
   );
 }
