@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Form from "./components/Form";
 import Todo from "./components/Todo";
+import Modal from "./components/Modal";
 
 function App() {
   const generateHash = () => {
@@ -22,7 +23,10 @@ function App() {
   ];
 
   const [items, setItems] = useState(defaultTodo);
+  const [openModal, setModal] = useState(false);
+  const [newKey, setKey] = useState(null);
 
+  // Add item part
   const addItemHandler = (todoData) => {
     setItems((prevItems) => {
       return [...prevItems, { id: generateHash(), value: todoData.value }];
@@ -32,15 +36,44 @@ function App() {
   };
   // Always update the state with the end result
 
+  // Delete item part
   const deleteItemHandler = (key) => {
     console.log("Delete executed once!");
     const updatedItems = items.filter((item) => item.id != key);
     setItems(updatedItems);
   };
 
-  const updateItemHandler = (key) => {
+  // Updation part
+
+  // Click button handler, it opens up the modal
+  const clickUpdateBtnHandler = (key) => {
     console.log("Update item clicked! " + key);
-    return <div>Hello</div>;
+    setKey(key);
+    setModal(true);
+  };
+
+  // Updation handler, actually handles the update
+  const updateNameHandler = (newData) => {
+    console.log(newData.id + "  " + newData.title);
+    setModal(false);
+
+    let tempItems = [...items];
+    let pos = false;
+    for (let i = 0; i < tempItems.length; i++) {
+      if (tempItems[i].id === newData.id) {
+        pos = i;
+        break;
+      }
+    }
+    //console.log("Element found at pos: " + pos);
+    //console.log("Elemet has value: " + tempItems[pos].value);
+    tempItems[pos].value = newData.title;
+    //console.log("Elemet has new value: " + tempItems[pos].value);
+    setItems(tempItems);
+  };
+
+  const closeModalHandler = () => {
+    setModal(false);
   };
 
   const showItems = () => {
@@ -59,10 +92,16 @@ function App() {
     return (
       <div className="App">
         <Form onAddItemHandler={addItemHandler} />
+        <Modal
+          open={openModal}
+          onCloseModal={closeModalHandler}
+          targetID={newKey}
+          updateName={updateNameHandler}
+        ></Modal>
         <Todo
           arrayItems={items}
           onDeleteItemHandler={deleteItemHandler}
-          onUpdateItemHandler={updateItemHandler}
+          onClickUpdateItemHandler={clickUpdateBtnHandler}
         />
       </div>
     );

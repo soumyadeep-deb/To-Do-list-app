@@ -1,0 +1,31 @@
+.modal{
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 15px;
+    box-shadow: 1px 4px 10px 2px rgba(0,0,0,.8);
+    
+    margin: 1% 0% 2% 5%;
+
+    max-width: 28%;
+    min-width: 500px;
+    text-align: center;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    padding: 8px;
+    text-align: center;
+}
+
+.modal button{
+    margin: 8px 10px;
+}
+
+.modal div{
+    padding: 15px;
+    font-size: 17px;
+    font-weight: 100;
+}
+
+.modal input{
+    margin: 5px 5px 5px 20px;
+    font-size: 18px;
+}

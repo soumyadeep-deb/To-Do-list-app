@@ -7,7 +7,7 @@ function Todo(props) {
   };
 
   const handleUpdateBtn = (key) => {
-    props.onUpdateItemHandler(key);
+    props.onClickUpdateItemHandler(key);
   };
 
   return (
